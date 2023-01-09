@@ -4,12 +4,15 @@
     
         $fertilizerid=$_POST['fertilizerid'];
         $quantity=$_POST['quantity'];
+        $timestocked=$_POST['timestocked'];
         $sql=mysqli_query( $conn,"UPDATE stockin SET quantity=quantity+$quantity WHERE ferti_id='$fertilizerid';");
-        // $sql1=mysqli_query($conn,"INSERT INTO stockin(
-        //     ferti_id,
-        //     quantity) VALUES (
-        //         '$fertilizerid',
-        //         $quantity)");
+        $sql1=mysqli_query($conn,"INSERT INTO stockin(
+            ferti_id,
+            quantity,
+            timestocked) VALUES (
+                '$fertilizerid',
+                $quantity,
+                '$timestocked')");
     
             if ($sql) {
                 $successmessage .='Stock in, Successfully';  
@@ -95,6 +98,13 @@
                                                         placeholder="">
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">Date Stocked</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" name="timestocked" class="form-control form-control-normal"
+                                                        placeholder="">
+                                                    </div>
+                                                </div>
                                              
                                             
                                             
@@ -114,6 +124,7 @@
                                                 <tr>
                                                     <th>Fertilizer Name</th>
                                                     <th>Quantity</th>
+                                                    <th>TimeStocked</th>
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
@@ -125,6 +136,7 @@
                                                 <tr>
                                                     <td><?php echo $row['ferti_id'] ; ?></td>
                                                     <td><?php echo $row['quantity'] ; ?></td>
+                                                    <td><?php echo $row['timestocked'] ; ?></td>
                                                     <td><a class="btn btn-danger"  href="delete.php?delrequest=<?php echo $row['request_id']; ?> " onclick="return confirm('are you sure! you want to delete')" id="red">Delete</a></td>
                                                 </tr>
                                                 <?php

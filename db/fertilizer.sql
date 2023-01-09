@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 03, 2022 at 02:57 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.0.19
+-- Host: 127.0.0.1
+-- Generation Time: Dec 17, 2022 at 11:33 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `fertilizer`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `budget`
+--
+
+CREATE TABLE `budget` (
+  `budget_id` int(255) NOT NULL,
+  `budget_year` varchar(255) NOT NULL,
+  `budget` varchar(255) NOT NULL,
+  `ferti_type` varchar(255) NOT NULL,
+  `timesaved` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `budget`
+--
+
+INSERT INTO `budget` (`budget_id`, `budget_year`, `budget`, `ferti_type`, `timesaved`) VALUES
+(3, '2022', '2000000', ' npk', '2022-11-24 12:58:33'),
+(7, '2023', '5000000', ' sodium', '2022-12-02 13:32:32'),
+(8, '2021', '1000000', 'fct', '2022-12-02 13:34:06'),
+(10, '2020', '8000000', ' npk', '2022-12-17 10:02:01'),
+(11, '2019', '5000000', ' npk', '2022-12-17 10:14:45');
 
 -- --------------------------------------------------------
 
@@ -43,13 +68,9 @@ CREATE TABLE `farmers` (
 --
 
 INSERT INTO `farmers` (`farmer_id`, `farmer_names`, `land_scale`, `district`, `sector`, `cell`, `villages`, `user_id`) VALUES
-(4, 'Kanakuze Delphine', '200hect', 'kavumu', 'kanombe', 'remera', '', 2),
-(5, 'Phil Ndizeye', '200hect', 'samuduha', 'kanombe', 'remera', 'niboye', 2),
-(7, 'Douce Ndizeye', '200hect', 'kavumu', 'rebero', 'remera', 'niboye', 3),
-(9, 'Kanakuze Delphine', '200hect', 'samuduha', 'rebero', 'remera', 'niboye', 8),
-(10, 'danny', '200hect', 'kavumu', 'rebero', 'remera', 'niboye', 9),
-(11, 'ddfd', '32', 'huye', 'mazi', 'kage ', 'rug', 8),
-(12, 'frank', '122', 'Gasabo', 'kk', 'k', 'k', 8);
+(13, 'kenny rugaba', '120', 'Burera', 'gic', 'reme', 'ter', 2),
+(14, 'phil ndizeye', '120', 'Gatsibo', 'ewe', 'kicuki', 'ter', 2),
+(15, 'aline', '120', 'Muhanga', 'gahanga', 'kicuki', 'ter', 2);
 
 -- --------------------------------------------------------
 
@@ -59,21 +80,18 @@ INSERT INTO `farmers` (`farmer_id`, `farmer_names`, `land_scale`, `district`, `s
 
 CREATE TABLE `fertilizer` (
   `ferti_id` int(255) NOT NULL,
-  `ferti_type` varchar(255) NOT NULL
+  `ferti_type` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `fertilizer`
 --
 
-INSERT INTO `fertilizer` (`ferti_id`, `ferti_type`) VALUES
-(5, 'npk'),
-(6, 'qwe'),
-(7, ''),
-(8, 'kpd'),
-(9, 'd'),
-(10, 'wq'),
-(11, 'nopos');
+INSERT INTO `fertilizer` (`ferti_id`, `ferti_type`, `price`) VALUES
+(13, 'sodium', '1000'),
+(14, 'npk', '1030'),
+(15, 'yuwee', '500');
 
 -- --------------------------------------------------------
 
@@ -111,6 +129,7 @@ CREATE TABLE `requests` (
   `farmer_id` varchar(255) NOT NULL,
   `ferticategory` varchar(255) NOT NULL,
   `landscale` varchar(255) NOT NULL,
+  `order_date` varchar(255) NOT NULL,
   `fertiquantity` varchar(255) NOT NULL,
   `fertilizerunit` varchar(255) NOT NULL,
   `district` varchar(255) NOT NULL,
@@ -126,11 +145,12 @@ CREATE TABLE `requests` (
 -- Dumping data for table `requests`
 --
 
-INSERT INTO `requests` (`request_id`, `farmer_id`, `ferticategory`, `landscale`, `fertiquantity`, `fertilizerunit`, `district`, `sector`, `cell`, `village`, `timesent`, `user_id`, `status`) VALUES
-(18, '9', 'npk', '2', '10', 'kg', 'Gasabo', 'mbazi', 'huyew', 'nmc', '2022-09-28 17:01:12.553596', 8, 'Approved'),
-(19, '12', 'nopos', '212', '20', 'kg', 'Gasabo', 'dsd', 'dsd', 'dsd', '2022-09-29 08:45:49.387466', 8, 'Approved'),
-(20, '12', 'nopos', '23', '', 'kg', 'Ruhango', '', 'kirehe', 'ewe', '2022-10-03 12:52:24.900986', 8, 'Approved'),
-(21, '11', 'nopos', '23', '10', 'kg', 'Nyanza', 'ruba', 'ewer', 'reb', '2022-10-03 12:54:49.437300', 1, 'Approved');
+INSERT INTO `requests` (`request_id`, `farmer_id`, `ferticategory`, `landscale`, `order_date`, `fertiquantity`, `fertilizerunit`, `district`, `sector`, `cell`, `village`, `timesent`, `user_id`, `status`) VALUES
+(24, '14', 'npk', '126', '', '5', 'tone', 'Gatsibo', 'gic', 'reme', 'dwxas', '2022-11-24 13:03:56.027022', 2, 'Approved'),
+(25, '13', 'sodium', '126', '', '2', 'kg', 'Burera', 'ewe', 'reme', 'dwxas', '2022-12-17 10:29:41.810357', 2, 'Approved'),
+(26, '13', 'npk', '126', '', '10', 'kg', 'Bugesera', 'ewe', 'reme', 'dwxas', '2022-12-17 10:03:11.883591', 2, 'Approved'),
+(27, '15', 'yuwee', '20', '2023-05-30', '10', 'tone', 'Muhanga', 'gahanga', 'kicuki', 'kanombe', '2022-12-14 10:16:43.301723', 2, 'Approved'),
+(28, '14', 'npk', '200hect', '2022-12-16', '5', 'tone', 'Huye', 'kanombe', 'remera', 'galle', '2022-12-14 10:26:17.747517', 2, 'Approved');
 
 -- --------------------------------------------------------
 
@@ -150,10 +170,10 @@ CREATE TABLE `stockin` (
 --
 
 INSERT INTO `stockin` (`id`, `ferti_id`, `quantity`, `timeimported`) VALUES
-(1, 'npk', '678', '2022-09-28 17:01:12'),
-(2, 'qwe', '80', '2022-09-27 20:34:28'),
-(8, 'wq', '32', '2022-09-27 20:20:00'),
-(9, 'nopos', '29273', '2022-10-03 12:54:49');
+(10, 'npk', '1475', '2022-12-17 10:15:09'),
+(11, 'yuwee', '488', '2022-12-14 10:16:44'),
+(13, 'sodium', '538', '2022-12-17 10:29:42'),
+(14, 'npk', '1000', '2022-12-17 10:15:09');
 
 -- --------------------------------------------------------
 
@@ -164,9 +184,11 @@ INSERT INTO `stockin` (`id`, `ferti_id`, `quantity`, `timeimported`) VALUES
 CREATE TABLE `stockout` (
   `id` int(11) NOT NULL,
   `quantity` varchar(255) NOT NULL,
+  `fertilizer` varchar(255) NOT NULL,
   `unit` text NOT NULL,
   `farmer_id` varchar(255) NOT NULL,
   `district` varchar(255) NOT NULL,
+  `timesent` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -174,13 +196,21 @@ CREATE TABLE `stockout` (
 -- Dumping data for table `stockout`
 --
 
-INSERT INTO `stockout` (`id`, `quantity`, `unit`, `farmer_id`, `district`, `user_id`) VALUES
-(2, '10', '', '9', 'Gasabo', 8),
-(3, '10', '', '9', 'Gasabo', 8),
-(4, '10', 'kg', '9', 'Gasabo', 8),
-(5, '20', 'kg', '12', 'Gasabo', 8),
-(6, '', 'kg', '12', 'Ruhango', 8),
-(7, '10', 'kg', '11', 'Nyanza', 1);
+INSERT INTO `stockout` (`id`, `quantity`, `fertilizer`, `unit`, `farmer_id`, `district`, `timesent`, `user_id`) VALUES
+(8, '2', 'npk', 'kg', '13', 'Burera', '2022', 2),
+(12, '2', 'sodium', 'tone', '15', 'Muhanga', '2023', 2),
+(13, '2', 'npk', 'tone', '15', 'Muhanga', '2023', 2),
+(14, '2', 'npk', 'tone', '15', 'Muhanga', '2023', 2),
+(15, '2', 'npk', 'tone', '15', 'Muhanga', '2023', 2),
+(16, '2', 'npk', 'tone', '15', 'Muhanga', '2023', 2),
+(17, '2', 'yuwee', 'tone', '15', 'Muhanga', '2023', 2),
+(18, '10', 'yuwee', 'tone', '15', 'Muhanga', '2023', 2),
+(19, '10', 'npk', 'kg', '13', 'Bugesera', '', 2),
+(20, '2', 'sodium', 'kg', '13', 'Burera', '', 2),
+(21, '5', 'npk', 'tone', '14', 'Huye', '2022', 2),
+(22, '10', 'npk', 'kg', '13', 'Bugesera', '', 2),
+(23, '2', 'sodium', 'kg', '13', 'Burera', '', 2),
+(24, '2', 'sodium', 'kg', '13', 'Burera', '', 2);
 
 -- --------------------------------------------------------
 
@@ -204,7 +234,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `phone`, `address`, `password`, `role`) VALUES
-(1, 'david', 'kay', 'davidkay@gmail.com', '078856789', '', '1212', 'admin'),
+(1, 'Elie', 'Mugisha', 'Elie@gmail.com', '078856789', '', '1212', 'admin'),
 (2, 'annick', 'linca', 'lincaannick@gmail.com', '079087654', 'Kigali', '3434', 'retailer'),
 (3, 'dinee', 'ishimwe', 'ishimwedinee@gmail.com', '078664545', 'North', '3636', 'retailer'),
 (8, 'philbert', 'nyi', 'ndzphilbert@gmail.com', '0875422333', 'East', '1414', 'retailer'),
@@ -213,6 +243,13 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `phone`, `address`, 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `budget`
+--
+ALTER TABLE `budget`
+  ADD PRIMARY KEY (`budget_id`),
+  ADD KEY `fertilizer` (`ferti_type`);
 
 --
 -- Indexes for table `farmers`
@@ -266,16 +303,22 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `budget`
+--
+ALTER TABLE `budget`
+  MODIFY `budget_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `farmers`
 --
 ALTER TABLE `farmers`
-  MODIFY `farmer_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `farmer_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `fertilizer`
 --
 ALTER TABLE `fertilizer`
-  MODIFY `ferti_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ferti_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -287,19 +330,19 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `request_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `request_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `stockin`
 --
 ALTER TABLE `stockin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `stockout`
 --
 ALTER TABLE `stockout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user`

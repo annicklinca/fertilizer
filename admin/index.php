@@ -114,7 +114,7 @@ function toggleDataSeries(e){
                             <div class="card-body">
                                 <div class="d-flex no-block">
                                     <div>
-                                        <h5 class="card-title m-b-0"> Investment chart</h5>
+                                        <h5 class="card-title m-b-0"> Analysis chart</h5>
                                     </div>
                                 </div>
                                 <div class="chart-area">
